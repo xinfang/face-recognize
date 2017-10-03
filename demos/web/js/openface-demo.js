@@ -75,7 +75,7 @@ function sendFrameLoop() {
         socket.send(JSON.stringify(msg));
         tok--;
     }
-    setTimeout(function() {requestAnimFrame(sendFrameLoop)}, 250);
+    setTimeout(function() {requestAnimFrame(sendFrameLoop)}, 5000);
 }
 
 
@@ -102,10 +102,10 @@ function getPeopleInfoHtml() {
 
 function redrawPeople() {
     var context = {people: people, images: images};
-    $("#peopleTable").html(peopleTableTmpl(context));
+    //$("#peopleTable").html(peopleTableTmpl(context));
 
     var context = {people: people};
-    $("#defaultPersonDropdown").html(defaultPersonTmpl(context));
+    //$("#defaultPersonDropdown").html(defaultPersonTmpl(context));
 
     $("#peopleInfo").html(getPeopleInfoHtml());
 }
@@ -168,7 +168,6 @@ function createSocket(address, name) {
         sentTimes.push(new Date());
     }
     socket.onmessage = function(e) {
-        console.log(e);
         j = JSON.parse(e.data)
         if (j.type == "NULL") {
             receivedTimes.push(new Date());
@@ -193,22 +192,35 @@ function createSocket(address, name) {
             redrawPeople();
         } else if (j.type == "IDENTITIES") {
             var h = "Last updated: " + (new Date()).toTimeString();
-            h += "<ul>";
+            //h += "<ul>";
             var len = j.identities.length
+            currentIdentities = j.identities
+            console.log('i found it')
+             console.log(j.identities)
+            console.log('--i found it')
+            updateQueue(j.identities);
             if (len > 0) {
                 for (var i = 0; i < len; i++) {
                     var identity = "Unknown";
                     var idIdx = j.identities[i];
-                    if (idIdx != -1) {
-                        identity = people[idIdx];
-                    }
-                    h += "<li>" + identity + "</li>";
+                    // if (idIdx != -1) {
+                    //     identity = people[idIdx];
+                    // }
+                    //h += "<li>" + idIdx + "</li>";
+                    console.log()
+                    
                 }
+                $("#peopleNames").html(j.identities.toString());
+                $("#popNames").html('<h1> I found you...' + j.identities[0].toString() + '</h1>');
+                $("#myBtn" ).trigger("click");
             } else {
-                h += "<li>Nobody detected.</li>";
+                //h += "<li>Nobody detected.</li>";
+                $("#peopleNames").html('');
             }
-            h += "</ul>"
+            //h += "</ul>"
             $("#peopleInVideo").html(h);
+
+
         } else if (j.type == "ANNOTATED") {
             $("#detectedFaces").html(
                 "<img src='" + j['content'] + "' width='430px'></img>"
@@ -292,7 +304,6 @@ function findImageByHash(hash) {
     var len = images.length;
     for (imgIdx = 0; imgIdx < len; imgIdx++) {
         if (images[imgIdx].hash == hash) {
-            console.log("  + Image found.");
             return imgIdx;
         }
     }
@@ -313,7 +324,7 @@ function updateIdentity(hash, idx) {
 }
 
 function removeImage(hash) {
-    console.log("Removing " + hash);
+
     var imgIdx = findImageByHash(hash);
     if (imgIdx >= 0) {
         images.splice(imgIdx, 1);

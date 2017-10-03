@@ -298,7 +298,7 @@ class OpenFaceServerProtocol(WebSocketServerProtocol):
                         "type": "NEW_IMAGE",
                         "hash": phash,
                         "content": content,
-                        "identity": identity,
+                        "identity": 'IDENTITIES',
                         "representation": rep.tolist()
                     }
                     self.sendMessage(json.dumps(msg))

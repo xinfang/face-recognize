@@ -51,7 +51,7 @@ img {
 }
 
 .container .content {
-    top: 350px;
+    top: 0px;
     bottom: 0;
     position: absolute;
     right: 0;

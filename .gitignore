@@ -26,5 +26,9 @@ demos/web/unknown*.npy
 models/openface/*.t7
 models/openface/*.pkl
 celeb-classifier*
+training-images
+aligned-images
 
 site
+/aligned-images
+/training-images

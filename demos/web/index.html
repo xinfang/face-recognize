@@ -89,7 +89,7 @@
     </style>
 </head>
 
-<body onload="timer()">
+<body>
     <div class="container">
         <div class="content">
             <h2>Hi,<span id="peopleNames"></span></h2>
@@ -229,29 +229,51 @@
 
     // createSocket("wss://facerec.cmusatyalab.org:9000", "CMU");
     createSocket("wss://" + window.location.hostname + ":9000", "Local");
-
-    function timer() {
+    setInterval( function(){ 
         console.log('My Current Queue is', queue);
         //getMemberRecogntions();
-        setTimeout('timer()', 2500);
-    }
+        if (!isShowing) {
+            processQueue();
+        }
+    }, 2500);
+    // function timer() {
+    //     console.log('My Current Queue is', queue);
+    //     //getMemberRecogntions();
+    //     if (!isShowing) {
+    //         processQueue();
+    //     }
+    //     setTimeout('timer()', 2500);
+    // }
 
-    function getMemberRecogntions() {
+    function processQueue() {
         if (!queue.length) {
-            console.log('queue empty', queue)
             return;
         }
+        var current = queue.shift()
+        //var current = queue[0];
+        getMemberRecogntions(current.name)
+        // $("#popNames").html('<h1> I found you...' + current.name + '</h1>');
+        // modal.style.display = "block";
+        // isShowing = true;
+        // setTimeout(function(){
+        //     isShowing = false;
+        //     modal.style.display = "none";
+        // }), 10000);
+    }
+
+    function getMemberRecogntions(name) {
+
         console.log('Ajax get delete done', queue)
-        var currentName = queue.splice(0, 1)
-        currentName[0] = currentName[0] + '@highground.com';
+        
+        userNames = [name + '@highground.com'];
         //currentName[0] = 'gary' + '@highground.com';
-        console.log('Ajax get delete done', queue)
+        console.log('Ajax get delete done', userNames)
         $.ajax({
             url: host + '/svc/Recognition/GetMemberRecogntionsByUserName',
             type: 'GET',
             data: {
                 take: 3,
-                userNames: currentName
+                userNames: userNames
             },
             crossDomain: true,
             xhrFields: {
@@ -267,12 +289,13 @@
                 //if (!alreadyFetch) {
                 $("#everydayTable").html(everydayTableTmpl(data));
                 $("#companyTable").html(companyTableTmpl(data));
-                //    alreadyFetch = true;
-                //}
-                $("#popNames").html('<h1> I found you...' + currentName + '</h1>');
+                $("#popNames").html('<h1> I found you...' + name + '</h1>');
                 modal.style.display = "block";
                 isShowing = true;
-                //window.setTimeout(function() {getMemberRecogntions()}, 10000).bind(this);
+                setTimeout(function(){
+                    isShowing = false;
+                    modal.style.display = "none";
+                }, 10000);
             }
         });
     }

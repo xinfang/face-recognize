@@ -209,7 +209,8 @@
         training = false;
     var numNulls, sentTimes, receivedTimes;
     var socket, socketName;
-    var isShowing;
+    var isShowing,
+        lastCloseTime;
 
     $("#peopleInVideo").html("");
 
@@ -231,43 +232,18 @@
     createSocket("wss://" + window.location.hostname + ":9000", "Local");
     setInterval( function(){ 
         console.log('My Current Queue is', queue);
-        //getMemberRecogntions();
-        if (!isShowing) {
-            processQueue();
-        }
-    }, 2500);
-    // function timer() {
-    //     console.log('My Current Queue is', queue);
-    //     //getMemberRecogntions();
-    //     if (!isShowing) {
-    //         processQueue();
-    //     }
-    //     setTimeout('timer()', 2500);
-    // }
-
-    function processQueue() {
-        if (!queue.length) {
+        if (isShowing || !queue.length) {
             return;
         }
-        var current = queue.shift()
-        //var current = queue[0];
-        getMemberRecogntions(current.name)
-        // $("#popNames").html('<h1> I found you...' + current.name + '</h1>');
-        // modal.style.display = "block";
-        // isShowing = true;
-        // setTimeout(function(){
-        //     isShowing = false;
-        //     modal.style.display = "none";
-        // }), 10000);
-    }
+        if (!lastCloseTime || new Date().getTime() - lastCloseTime > 5000) {
+            var current = queue.shift()
+            getMemberRecogntions(current.name)
+        }
+    }, 2500);
 
     function getMemberRecogntions(name) {
-
-        console.log('Ajax get delete done', queue)
-        
+        console.log('Ajax get name ', name)
         userNames = [name + '@highground.com'];
-        //currentName[0] = 'gary' + '@highground.com';
-        console.log('Ajax get delete done', userNames)
         $.ajax({
             url: host + '/svc/Recognition/GetMemberRecogntionsByUserName',
             type: 'GET',
@@ -286,7 +262,7 @@
                 console.log('get data');
                 console.log(data)
                 feeds = data;
-                //if (!alreadyFetch) {
+
                 $("#everydayTable").html(everydayTableTmpl(data));
                 $("#companyTable").html(companyTableTmpl(data));
                 $("#popNames").html('<h1> I found you...' + name + '</h1>');
@@ -295,6 +271,7 @@
                 setTimeout(function(){
                     isShowing = false;
                     modal.style.display = "none";
+                    lastCloseTime = new Date().getTime();
                 }, 10000);
             }
         });

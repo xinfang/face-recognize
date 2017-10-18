@@ -1,215 +1,243 @@
-
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Face Recognition</title>
-        <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
-        <link href="vendor/css/bootstrap-toggle.min.css" rel="stylesheet">
-        <link href="vendor/css/bootstrap-dialog.min.css" rel="stylesheet">
-        <link href="css/main.css" rel="stylesheet">
-<link href="css/hg-core.css" rel="stylesheet">
-          <!-- <link href="css/hgapp.css" rel="stylesheet"> --> 
-        <style>
-            p{background:#666;}/*对div中的p标签设置才有间隔效果，所以在设置内容时，也是在p中设置*/
-            .parent{
-               
-            }
-            .badge-panel{
-                width: 150px;
-            }
-            .div-textcenter{
-                text-align:center;
-            }
-            .column{
-                float: left;
-                width: 50%;
-                padding-left: 20px;
-                box-sizing: border-box;
-            }
 
-                        /* The Modal (background) */
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            }
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Face Recognition</title>
+    <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="vendor/css/bootstrap-dialog.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/hg-core.css" rel="stylesheet">
+    <!-- <link href="css/hgapp.css" rel="stylesheet"> -->
+    <style>
+        p {
+            background: #666;
+        }
 
-            /* Modal Content/Box */
-            .modal-content {
-                background-color: #fefefe;
-                margin: 15% auto; /* 15% from the top and centered */
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%; /* Could be more or less, depending on screen size */
-            }
+        /*对div中的p标签设置才有间隔效果，所以在设置内容时，也是在p中设置*/
 
-            /* The Close Button */
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
+        .parent {}
 
-            .close:hover,
-            .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-            }
+        .badge-panel {
+            width: 150px;
+        }
 
-        </style>
-    </head>
-    <body onload="timer()">
-        <div class="container">
-            <div class="content">
-                <h2>Hi,<span id="peopleNames"></span></h2>
-                <div id="peopleInVideo"></div>
-                <!-- <button id='hgbtn' type="button" class="btn btn-default active">Display Recognition</button> -->
+        .div-textcenter {
+            text-align: center;
+        }
 
-                <br/>
-                <div id="companyTable">
-                </div>
-                <script id="companyTableTmpl" type="text/x-handlebars-template">
-                    {{#if company}}
-                        <div><h2>{{../counts.CompanyCount}} Company</h2></div>
-                        <hr>
-                        <div>
-                        {{#each company}}
-                            <div>
-                                <div class="panel panel-default badge-panel">
-                                    <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
-                                    <h5  class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
-                                    <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
-                                </div>
-                            </div>
-                         {{/each}}
-                        </div>
-                     {{/if}}
-                </script>
+        .column {
+            float: left;
+            width: 50%;
+            padding-left: 20px;
+            box-sizing: border-box;
+        }
 
-                 <br/>
+        /* The Modal (background) */
 
-                <div id="everydayTable">
-                </div>
-                <script id="everydayTableTmpl" type="text/x-handlebars-template">
-                    {{#if everyday}}
-                        <div><h2>{{../counts.EverydayCount}} Everyday</h2></div>
-                        <hr>
-                        <div>
-                        {{#each everyday}}
-                            <div >
-                                <div class="panel panel-default badge-panel">
-                                    <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
-                                    <h5  class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
-                                    <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
-                                    <div class="tile-bot clearfix ng-scope">
-                                        <hr>
-                                        <div class="pull-left mar-rt10">
-                                            <i class="sprite-okr congrats pull-left"></i>
-                                            <div class="pull-left recog-count ng-binding ">{{this.CongratsCount}}</div>
-                                        </div>
-                                        <div class="pull-left">
-                                            <i class="sprite-okr comments pull-left"></i>
-                                            <div class="pull-left recog-count ng-binding">{{this.CommentCount}}</div>
-                                        </div>
-                                        <div class="timestamp div-textcenter">7 months ago</div>
-                                    </div>
-                                </div>
-                            </div>
-                         {{/each}}
-                        </div>
-                     {{/if}}
-                </script>
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body onload="timer()">
+    <div class="container">
+        <div class="content">
+            <h2>Hi,<span id="peopleNames"></span></h2>
+            <div id="peopleInVideo"></div>
+            <!-- <button id='hgbtn' type="button" class="btn btn-default active">Display Recognition</button> -->
+
+            <br/>
+            <div id="companyTable">
             </div>
-        </div>
-         <div style="display:none;">
-                <div id='tab-preview' class='tab-content'>
-                    <video id="videoel" width="400" height="300"
-                           preload="auto" loop></video>
+            <script id="companyTableTmpl" type="text/x-handlebars-template">
+                {{#if company}}
+                <div>
+                    <h2>{{../counts.CompanyCount}} Company</h2>
                 </div>
-                <div id='tab-annotated' class='tab-content current'>
-                    <div id="detectedFaces"></div>
+                <hr>
+                <div>
+                    {{#each company}}
+                    <div>
+                        <div class="panel panel-default badge-panel">
+                            <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
+                            <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
+                            <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
+                        </div>
+                    </div>
+                    {{/each}}
                 </div>
+                {{/if}}
+            </script>
+
+            <br/>
+
+            <div id="everydayTable">
+            </div>
+            <script id="everydayTableTmpl" type="text/x-handlebars-template">
+                {{#if everyday}}
+                <div>
+                    <h2>{{../counts.EverydayCount}} Everyday</h2>
+                </div>
+                <hr>
+                <div>
+                    {{#each everyday}}
+                    <div>
+                        <div class="panel panel-default badge-panel">
+                            <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
+                            <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
+                            <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
+                            <div class="tile-bot clearfix ng-scope">
+                                <hr>
+                                <div class="pull-left mar-rt10">
+                                    <i class="sprite-okr congrats pull-left"></i>
+                                    <div class="pull-left recog-count ng-binding ">{{this.CongratsCount}}</div>
+                                </div>
+                                <div class="pull-left">
+                                    <i class="sprite-okr comments pull-left"></i>
+                                    <div class="pull-left recog-count ng-binding">{{this.CommentCount}}</div>
+                                </div>
+                                <div class="timestamp div-textcenter">7 months ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+            </script>
         </div>
-        <button id="myBtn">Open Modal</button>
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-          <!-- Modal content -->
-          <div class="modal-content">
+    </div>
+    <div style="display:none;">
+        <div id='tab-preview' class='tab-content'>
+            <video id="videoel" width="400" height="300" preload="auto" loop></video>
+        </div>
+        <div id='tab-annotated' class='tab-content current'>
+            <div id="detectedFaces"></div>
+        </div>
+    </div>
+    <button id="myBtn">Open Modal</button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
             <span class="close">&times;</span>
-            <div class='div-textcenter' id='popNames'><h1>Some text in the Modal..</h1></div>
+            <div class='div-textcenter' id='popNames'>
+                <h1>Some text in the Modal..</h1>
+            </div>
             <p></p>
             <img src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png' />
-          </div>
         </div>
+    </div>
 
-    </body>
-    <script src="vendor/js/jquery.min.js"></script>
-    <script src="vendor/js/bootstrap.min.js"></script>
-    <script src="vendor/js/bootstrap-toggle.min.js"></script>
-    <script src="vendor/js/bootstrap-dialog.min.js"></script>
-    <script src="vendor/js/handlebars.min.js"></script>
-    <script src="vendor/js/jstat.min.js"></script>
-    <script src="js/hgservice.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/openface-demo.js"></script>
-    <script type="text/javascript">
-     registerHbarsHelpers();
-     var host = 'https://10.0.4.242:8095';
-     var alreadyFetch = false;
-     var queue = [];
-     var lastIdentities = [],
-         currentIdentities = [];
-     var vid = document.getElementById('videoel'),
-         vidReady = false;
-     var everydayTableTmpl = Handlebars.compile($("#everydayTableTmpl").html());
-     var companyTableTmpl = Handlebars.compile($("#companyTableTmpl").html());
-     var defaultTok = 1, defaultNumNulls = 20;
-     var tok = defaultTok,
-         people = [], defaultPerson = -1,
-         images = [],
-         feeds = [],
-         training = false;
-     var numNulls, sentTimes, receivedTimes;
-     var socket, socketName;
-     var isShowing;
+</body>
+<script src="vendor/js/jquery.min.js"></script>
+<script src="vendor/js/bootstrap.min.js"></script>
+<script src="vendor/js/bootstrap-toggle.min.js"></script>
+<script src="vendor/js/bootstrap-dialog.min.js"></script>
+<script src="vendor/js/handlebars.min.js"></script>
+<script src="vendor/js/jstat.min.js"></script>
+<script src="js/hgservice.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/openface-demo.js"></script>
+<script type="text/javascript">
+    registerHbarsHelpers();
+    var host = 'https://10.0.4.242:8095';
+    var alreadyFetch = false;
+    var queue = [];
+    var lastIdentities = [],
+        currentIdentities = [];
+    var vid = document.getElementById('videoel'),
+        vidReady = false;
+    var everydayTableTmpl = Handlebars.compile($("#everydayTableTmpl").html());
+    var companyTableTmpl = Handlebars.compile($("#companyTableTmpl").html());
+    var defaultTok = 1,
+        defaultNumNulls = 20;
+    var tok = defaultTok,
+        people = [],
+        defaultPerson = -1,
+        images = [],
+        feeds = [],
+        training = false;
+    var numNulls, sentTimes, receivedTimes;
+    var socket, socketName;
+    var isShowing;
 
-     $("#peopleInVideo").html("");
+    $("#peopleInVideo").html("");
 
-     if (navigator.getUserMedia) {
-         var videoSelector = {video : true};
-         navigator.getUserMedia(videoSelector, umSuccess, function() {
-             alert("Error fetching video from webcam");
-         });
-     } else {
-         alert("No webcam detected.");
-     }
+    if (navigator.getUserMedia) {
+        var videoSelector = {
+            video: true
+        };
+        navigator.getUserMedia(videoSelector, umSuccess, function() {
+            alert("Error fetching video from webcam");
+        });
+    } else {
+        alert("No webcam detected.");
+    }
 
 
     redrawPeople();
 
-     // createSocket("wss://facerec.cmusatyalab.org:9000", "CMU");
+    // createSocket("wss://facerec.cmusatyalab.org:9000", "CMU");
     createSocket("wss://" + window.location.hostname + ":9000", "Local");
 
-    function timer(){
+    function timer() {
         console.log('My Current Queue is', queue);
         //getMemberRecogntions();
         setTimeout('timer()', 2500);
     }
 
     function getMemberRecogntions() {
-       if (!queue.length) {
+        if (!queue.length) {
             console.log('queue empty', queue)
             return;
         }
@@ -219,20 +247,20 @@
         //currentName[0] = 'gary' + '@highground.com';
         console.log('Ajax get delete done', queue)
         $.ajax({
-           url: host + '/svc/Recognition/GetMemberRecogntionsByUserName',
-           type: 'GET',
-           data: {
-              take: 3,
-              userNames: currentName
-           },
+            url: host + '/svc/Recognition/GetMemberRecogntionsByUserName',
+            type: 'GET',
+            data: {
+                take: 3,
+                userNames: currentName
+            },
             crossDomain: true,
             xhrFields: {
                 withCredentials: true
             },
-           error: function() {
-              console.log('error');
-           },
-           success: function(data) {
+            error: function() {
+                console.log('error');
+            },
+            success: function(data) {
                 console.log('get data');
                 console.log(data)
                 feeds = data;
@@ -245,7 +273,7 @@
                 modal.style.display = "block";
                 isShowing = true;
                 //window.setTimeout(function() {getMemberRecogntions()}, 10000).bind(this);
-           }
+            }
         });
     }
     //setTimeout(getMemberRecogntions,10000); 
@@ -254,17 +282,17 @@
     // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
     btn.onclick = function() {
-      if (!queue.length) {
-          $("#popNames").html('<h1> I found you...No body detected </h1>');
-      } else {
-          $("#popNames").html('<h1> I found you...' + queue[0].toString() + '</h1>');
-      }
-      modal.style.display = "block";
+        if (!queue.length) {
+            $("#popNames").html('<h1> I found you...No body detected </h1>');
+        } else {
+            $("#popNames").html('<h1> I found you...' + queue[0].toString() + '</h1>');
+        }
+        modal.style.display = "block";
     }
     var span = document.getElementsByClassName("close")[0];
     span.onclick = function() {
         modal.style.display = "none";
     }
+</script>
 
-    </script>
 </html>

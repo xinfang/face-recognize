@@ -198,7 +198,14 @@ function createSocket(address, name) {
             console.log('i found it')
             console.log(j.identities)
             console.log('--i found it')
-            updateQueue(j.identities);
+            var peoples = [];
+            for (var i = 0; i < len; i++) {
+                peoples.push({
+                    name: j.identities[i],
+                    time: new Date().getTime()
+                })
+            }
+            syncQueue(peoples);
             if (len > 0) {
                 for (var i = 0; i < len; i++) {
                     var identity = "Unknown";
@@ -243,6 +250,10 @@ function createSocket(address, name) {
         }
     }
 }
+
+
+
+
 
 function umSuccess(stream) {
     if (vid.mozCaptureStream) {

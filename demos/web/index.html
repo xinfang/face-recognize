@@ -183,6 +183,7 @@
          training = false;
      var numNulls, sentTimes, receivedTimes;
      var socket, socketName;
+     var isShowing;
 
      $("#peopleInVideo").html("");
 
@@ -196,14 +197,15 @@
      }
 
 
-     redrawPeople();
+    redrawPeople();
 
      // createSocket("wss://facerec.cmusatyalab.org:9000", "CMU");
     createSocket("wss://" + window.location.hostname + ":9000", "Local");
 
     function timer(){
-        getMemberRecogntions();
-        setTimeout('timer()', 10000);
+        console.log('My Current Queue is', queue);
+        //getMemberRecogntions();
+        setTimeout('timer()', 2500);
     }
 
     function getMemberRecogntions() {
@@ -239,7 +241,9 @@
                 $("#companyTable").html(companyTableTmpl(data));
                 //    alreadyFetch = true;
                 //}
-                
+                $("#popNames").html('<h1> I found you...' + currentName + '</h1>');
+                modal.style.display = "block";
+                isShowing = true;
                 //window.setTimeout(function() {getMemberRecogntions()}, 10000).bind(this);
            }
         });

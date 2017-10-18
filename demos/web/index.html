@@ -103,7 +103,7 @@ limitations under the License.
                         {{#each company}}
                             <div>
                                 <div class="panel panel-default badge-panel">
-                                    <img class="avatar-large" src="https://localhost:8095/img{{this.BadgeUrl}}.svg">
+                                    <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
                                     <h5  class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
                                     <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
                                 </div>
@@ -125,7 +125,7 @@ limitations under the License.
                         {{#each everyday}}
                             <div >
                                 <div class="panel panel-default badge-panel">
-                                    <img class="avatar-large" src="https://localhost:8095/img{{this.BadgeUrl}}.svg">
+                                    <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
                                     <h5  class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
                                     <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
                                     <div class="tile-bot clearfix ng-scope">
@@ -231,7 +231,7 @@ limitations under the License.
         //currentName[0] = 'gary' + '@highground.com';
         console.log('Ajax get delete done', queue)
         $.ajax({
-           url: 'https://localhost:8095/svc/Recognition/GetMemberRecogntionsByUserName',
+           url: 'https://10.0.4.242:8095/svc/Recognition/GetMemberRecogntionsByUserName',
            type: 'GET',
            data: {
               take: 3,
@@ -265,9 +265,9 @@ limitations under the License.
     var btn = document.getElementById("myBtn");
     btn.onclick = function() {
         modal.style.display = "block";
-        setTimeout(function() {
-            modal.style.display = "none";
-        }, 5000)
+        // setTimeout(function() {
+        //     modal.style.display = "none";
+        // }, 5000)
     }
     var span = document.getElementsByClassName("close")[0];
     span.onclick = function() {

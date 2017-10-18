@@ -196,7 +196,7 @@ function createSocket(address, name) {
             var len = j.identities.length
             currentIdentities = j.identities
             console.log('i found it')
-             console.log(j.identities)
+            console.log(j.identities)
             console.log('--i found it')
             updateQueue(j.identities);
             if (len > 0) {
@@ -212,7 +212,7 @@ function createSocket(address, name) {
                 }
                 $("#peopleNames").html(j.identities.toString());
                 $("#popNames").html('<h1> I found you...' + j.identities[0].toString() + '</h1>');
-                $("#myBtn" ).trigger("click");
+                //$("#myBtn" ).trigger("click");
             } else {
                 //h += "<li>Nobody detected.</li>";
                 $("#peopleNames").html('');

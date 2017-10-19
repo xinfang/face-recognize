@@ -9,82 +9,160 @@
     <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="vendor/css/bootstrap-dialog.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
-    <link href="css/hg-core.css" rel="stylesheet">
-    <!-- <link href="css/hgapp.css" rel="stylesheet"> -->
+    <link href=“css/hg-core.css” rel=“stylesheet”>
+    <link href=“css/hgapp.css” rel=“stylesheet”>
+    <link rel="stylesheet" href="css/swiper.min.css">
     <style>
         p {
             background: #666;
         }
-
-        /*对div中的p标签设置才有间隔效果，所以在设置内容时，也是在p中设置*/
-
-        .parent {}
-
-        .badge-panel {
+        .parent {} .badge-panel {
             width: 150px;
         }
-
         .div-textcenter {
             text-align: center;
         }
-
         .column {
             float: left;
             width: 50%;
             padding-left: 20px;
             box-sizing: border-box;
         }
-
         /* The Modal (background) */
-
+        
+        .swiper-container {
+            display: none;
+            width: 300px;
+            height: 300px;
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            width: 300px;
+        }
         .modal {
             display: none;
             /* Hidden by default */
+            
             position: fixed;
             /* Stay in place */
+            
             z-index: 1;
             /* Sit on top */
+            
             left: 0;
             top: 0;
             width: 100%;
             /* Full width */
+            
             height: 100%;
             /* Full height */
+            
             overflow: auto;
             /* Enable scroll if needed */
+            
             background-color: rgb(0, 0, 0);
             /* Fallback color */
+            
             background-color: rgba(0, 0, 0, 0.4);
             /* Black w/ opacity */
         }
-
         /* Modal Content/Box */
-
+        
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
             /* 15% from the top and centered */
+            
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 400px;
+            height: 300px;
             /* Could be more or less, depending on screen size */
         }
-
         /* The Close Button */
-
+        
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+        .pull-left {
+            float: left;
+        }
+        .banner {
+            height: 233px;
+            width: 3550px;
+            margin-bottom: 80px;
+        }
+        .first {
+            -webkit-animation: bannermove 30s linear infinite;
+            -moz-animation: bannermove 30s linear infinite;
+            -ms-animation: bannermove 30s linear infinite;
+            -o-animation: bannermove 30s linear infinite;
+            animation: bannermove 30s linear infinite;
+        }
+        @keyframes bannermove {
+            0% {
+                margin-left: 0px;
+            }
+            100% {
+                margin-left: -2125px;
+            }
+        }
+        @-moz-keyframes bannermove {
+            0% {
+                margin-left: 0px;
+            }
+            100% {
+                margin-left: -2125px;
+            }
+        }
+        @-webkit-keyframes bannermove {
+            0% {
+                margin-left: 0px;
+            }
+            100% {
+                margin-left: -2125px;
+            }
+        }
+        @-ms-keyframes bannermove {
+            0% {
+                margin-left: 0px;
+            }
+            100% {
+                margin-left: -2125px;
+            }
+        }
+        @-o-keyframes bannermove {
+            0% {
+                margin-left: 0px;
+            }
+            100% {
+                margin-left: -2125px;
+            }
         }
     </style>
 </head>
@@ -92,7 +170,7 @@
 <body>
     <div class="container">
         <div class="content">
-            <h2>Hi,<span id="peopleNames"></span></h2>
+            <h2>Hello,<span id="peopleNames"></span></h2>
             <div id="peopleInVideo"></div>
             <!-- <button id='hgbtn' type="button" class="btn btn-default active">Display Recognition</button> -->
 
@@ -105,13 +183,25 @@
                     <h2>{{../counts.CompanyCount}} Company</h2>
                 </div>
                 <hr>
-                <div>
+                <div class="banner">
                     {{#each company}}
                     <div>
                         <div class="panel panel-default badge-panel">
-                            <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
+                            <img class="avatar-large" src="https://localhost:8095/img{{this.BadgeUrl}}.svg">
                             <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
                             <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
+                            <div class=“tile-bot clearfix ng-scope”>
+                                <hr>
+                                <div class=“pull-left mar-rt10 ">
+                                    <i class=“sprite-okr congrats pull-left”></i>
+                                    <div class=“pull-left recog-count ng-binding “>{{this.CongratsCount}}</div>
+                                </div>
+                                <div class=“pull-left”>
+                                    <i class=“sprite-okr comments pull-left”></i>
+                                    <div class=“pull-left recog-count ng-binding”>{{this.CommentCount}}</div>
+                                </div>
+                                <div class=“timestamp div-textcenter”>7 months ago</div>
+                            </div>
                         </div>
                     </div>
                     {{/each}}
@@ -121,32 +211,32 @@
 
             <br/>
 
-            <div id="everydayTable">
+            <div id="everydayTable ">
             </div>
-            <script id="everydayTableTmpl" type="text/x-handlebars-template">
+            <script id="everydayTableTmpl " type="text/x-handlebars-template ">
                 {{#if everyday}}
                 <div>
                     <h2>{{../counts.EverydayCount}} Everyday</h2>
                 </div>
                 <hr>
-                <div>
+                <div class="banner ">
                     {{#each everyday}}
                     <div>
-                        <div class="panel panel-default badge-panel">
-                            <img class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
-                            <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
-                            <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
-                            <div class="tile-bot clearfix ng-scope">
+                        <div class="panel panel-default badge-panel ">
+                            <img class="avatar-large " src="https://localhost:8095/img{{this.BadgeUrl}}.svg ">
+                            <h5 class="ng-binding ng-scope div-textcenter ">{{this.Title}}</h5>
+                            <div class="given-by ng-binding div-textcenter ">{{this.Message}}</div>
+                            <div class="tile-bot clearfix ng-scope ">
                                 <hr>
-                                <div class="pull-left mar-rt10">
-                                    <i class="sprite-okr congrats pull-left"></i>
+                                <div class="pull-left mar-rt10 ">
+                                    <i class="sprite-okr congrats pull-left "></i>
                                     <div class="pull-left recog-count ng-binding ">{{this.CongratsCount}}</div>
                                 </div>
-                                <div class="pull-left">
-                                    <i class="sprite-okr comments pull-left"></i>
-                                    <div class="pull-left recog-count ng-binding">{{this.CommentCount}}</div>
+                                <div class="pull-left ">
+                                    <i class="sprite-okr comments pull-left "></i>
+                                    <div class="pull-left recog-count ng-binding ">{{this.CommentCount}}</div>
                                 </div>
-                                <div class="timestamp div-textcenter">7 months ago</div>
+                                <div class="timestamp div-textcenter ">7 months ago</div>
                             </div>
                         </div>
                     </div>
@@ -156,49 +246,78 @@
             </script>
         </div>
     </div>
-    <div style="display:none;">
+    <div style="display:none; ">
         <div id='tab-preview' class='tab-content'>
-            <video id="videoel" width="400" height="300" preload="auto" loop></video>
+            <video id="videoel " width="400 " height="300 " preload="auto " loop></video>
         </div>
         <div id='tab-annotated' class='tab-content current'>
-            <div id="detectedFaces"></div>
+            <div id="detectedFaces "></div>
         </div>
     </div>
-    <button id="myBtn">Open Modal</button>
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+
+
+    <div id="myModal " class="modal ">
         <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class='div-textcenter' id='popNames'>
-                <h1>Some text in the Modal..</h1>
+         <div class="modal-content ">
+           <div id="celebrationTable " class="swiper-container " >
+           </div>
+            <script id="celebrationTableTmpl " type="text/x-handlebars-template ">
+              <div class="swiper-wrapper banner ">
+                {{#each Badges}}
+                 <div class="swiper-slide ">
+                    <button class="btn-noStyle celebration-panel ng-scope ">
+                     <div  class="img img-anniv ng-scope "></div>
+                     <img avatar-src="b4d6a7e0-f232-11e3-be87-99f719f2fef2 " class="display-block " src="https://halcdn1.highground.com/user/{{ this.UserId }}.jpg ">
+                     <div class="text-center panel-content ">
+                        <h6 class="page-header mar-bot3 ng-binding ">{{ this.FullName }}</h6>
+                      
+                        <div class="ng-binding ng-scope ">{{ this.Years }}</div>
+                       
+                        <div class="panel-actions ">
+                           <div class="pull-left mar-lt30 "><i class="img-icon like display-inline-block "></i> <span class="display-inline-block ng-binding ">0</span></div>
+                           <div class="pull-right mar-rt30 "><i class="img-icon comment display-inline-block "></i> <span class="display-inline-block ng-binding ">0</span></div>
+                        </div>
+                     </div>
+                    </button>
+                   </div>
+                {{/each}}
+              </div>
             </div>
-            <p></p>
-            <img src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png' />
+            </script>
         </div>
     </div>
 
 </body>
-<script src="vendor/js/jquery.min.js"></script>
-<script src="vendor/js/bootstrap.min.js"></script>
-<script src="vendor/js/bootstrap-toggle.min.js"></script>
-<script src="vendor/js/bootstrap-dialog.min.js"></script>
-<script src="vendor/js/handlebars.min.js"></script>
-<script src="vendor/js/jstat.min.js"></script>
-<script src="js/hgservice.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/openface-demo.js"></script>
-<script type="text/javascript">
+<script src="vendor/js/jquery.min.js "></script>
+
+<!--  <script type="text/javascript " src="//code.jquery.com/jquery-1.11.0.min.js "></script>
+ <script type="text/javascript " src="//code.jquery.com/jquery-migrate-1.2.1.min.js "></script>
+ -->
+<script src="vendor/js/bootstrap.min.js "></script>
+<script src="vendor/js/bootstrap-toggle.min.js "></script>
+<script src="vendor/js/bootstrap-dialog.min.js "></script>
+<script src="vendor/js/handlebars.min.js "></script>
+<script src="vendor/js/jstat.min.js "></script>
+<script src="js/hgservice.js "></script>
+<script src="js/utils.js "></script>
+<script src="js/openface-demo.js "></script>
+
+<!--  <script type="text/javascript " src="js/slick.js "></script> -->
+
+ <script src="js/swiper.min.js "></script>
+
+<script type="text/javascript ">
     registerHbarsHelpers();
-    var host = 'https://10.0.4.242:8095';
+    var host = 'https://localhost:8095';
     var alreadyFetch = false;
     var queue = [];
     var lastIdentities = [],
         currentIdentities = [];
     var vid = document.getElementById('videoel'),
         vidReady = false;
-    var everydayTableTmpl = Handlebars.compile($("#everydayTableTmpl").html());
-    var companyTableTmpl = Handlebars.compile($("#companyTableTmpl").html());
+    var everydayTableTmpl = Handlebars.compile($("#everydayTableTmpl ").html());
+    var companyTableTmpl = Handlebars.compile($("#companyTableTmpl ").html());
+    var celebrationTableTmpl = Handlebars.compile($("#celebrationTableTmpl ").html());
     var defaultTok = 1,
         defaultNumNulls = 20;
     var tok = defaultTok,
@@ -212,24 +331,24 @@
     var isShowing,
         lastCloseTime;
 
-    $("#peopleInVideo").html("");
+    $("#peopleInVideo ").html(" ");
 
     if (navigator.getUserMedia) {
         var videoSelector = {
             video: true
         };
         navigator.getUserMedia(videoSelector, umSuccess, function() {
-            alert("Error fetching video from webcam");
+            alert("Error fetching video from webcam ");
         });
     } else {
-        alert("No webcam detected.");
+        alert("No webcam detected. ");
     }
 
 
     redrawPeople();
 
-    // createSocket("wss://facerec.cmusatyalab.org:9000", "CMU");
-    createSocket("wss://" + window.location.hostname + ":9000", "Local");
+    // createSocket("wss://facerec.cmusatyalab.org:9000 ", "CMU ");
+    createSocket("wss:// " + window.location.hostname + ":9000 ", "Local ");
     setInterval( function(){ 
         console.log('My Current Queue is', queue);
         if (isShowing || !queue.length) {
@@ -240,6 +359,19 @@
             getMemberRecogntions(current.name)
         }
     }, 2500);
+    var modal = document.getElementById('myModal');
+    var swip = document.getElementById('celebrationTable');
+
+    function getRandomArrayElements(arr, count) {
+        var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+        while (i-- > min) {
+            index = Math.floor((i + 1) * Math.random());
+            temp = shuffled[index];
+            shuffled[index] = shuffled[i];
+            shuffled[i] = temp;
+        }
+        return shuffled.slice(min);
+    }
 
     function getMemberRecogntions(name) {
         console.log('Ajax get name ', name)
@@ -262,37 +394,143 @@
                 console.log('get data');
                 console.log(data)
                 feeds = data;
-
-                $("#everydayTable").html(everydayTableTmpl(data));
-                $("#companyTable").html(companyTableTmpl(data));
-                $("#popNames").html('<h1> I found you...' + name + '</h1>');
-                modal.style.display = "block";
+             
+                $("#everydayTable ").html(everydayTableTmpl(data));
+                $("#companyTable ").html(companyTableTmpl(data));
+                var ceb = {
+                    Badges: getRandomArrayElements(celebration.Badges, 3)
+                }
+                $("#celebrationTable ").html(celebrationTableTmpl(ceb));
+                //$("#popNames ").html('<h1> I found you...' + name + '</h1>');
+                modal.style.display = "block ";
+                swip.style.display = "block ";
                 isShowing = true;
+                var swiper = new Swiper('.swiper-container', {
+                    spaceBetween: 30,
+                    centeredSlides: true,
+                    autoplay: {
+                      delay: 5000,
+                      disableOnInteraction: false,
+                    },
+                    pagination: {
+                      el: '.swiper-pagination',
+                      clickable: true,
+                    },
+                    navigation: {
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                    },
+                });
                 setTimeout(function(){
                     isShowing = false;
-                    modal.style.display = "none";
+                    modal.style.display = "none ";
+                    swip.style.display = "none ";
                     lastCloseTime = new Date().getTime();
-                }, 10000);
+                }, 20000);
             }
         });
     }
     //setTimeout(getMemberRecogntions,10000); 
 
-    var modal = document.getElementById('myModal');
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-    btn.onclick = function() {
-        if (!queue.length) {
-            $("#popNames").html('<h1> I found you...No body detected </h1>');
-        } else {
-            $("#popNames").html('<h1> I found you...' + queue[0].toString() + '</h1>');
+    var celebration = {
+      "Badges ": [
+        {
+          "hgId ": "1acb6130-af45-11e7-9620-c3cc28b324d5 ",
+          "MemberId ": "195350a0-2cff-11e3-bfda-51d213918166 ",
+          "FullName ": "Harry Osborne ",
+          "UserId ": "19358f70-2cff-11e3-bfda-51d213918166 ",
+          "FeedItemType ": "Anniversary ",
+          "CommentCount ": 0,
+          "CongratsCount ": 0,
+          "Birthdate ": "June 20 ",
+          "Years ": "6 years "
+        },
+        {
+          "hgId ": "f3efd100-ae7b-11e7-8691-2ddc27bcfd7c ",
+          "MemberId ": "ff9639c0-df4c-11e2-b13b-2d3012261be7 ",
+          "FullName ": "Scott Orscheln ",
+          "UserId ": "ff89b6a0-df4c-11e2-b13b-2d3012261be7 ",
+          "FeedItemType ": "Anniversary ",
+          "CommentCount ": 0,
+          "CongratsCount ": 0,
+          "Birthdate ": "February 15 ",
+          "Years ": "7 years "
+        },
+        {
+          "hgId ": "88393f20-ace9-11e7-8575-f5d63f5b45ca ",
+          "MemberId ": "bd9c43b2-1024-11e5-830e-fdfecfb4b9cb ",
+          "FullName ": "John J O 'Dell",
+          "UserId": "bd9c43b0-1024-11e5-830e-fdfecfb4b9cb",
+          "FeedItemType": "Anniversary",
+          "CommentCount": 0,
+          "CongratsCount": 0,
+          "Birthdate": "August 14",
+          "Years": "9 years"
+        },
+        {
+          "hgId": "25b13901-ace1-11e7-8575-f5d63f5b45ca",
+          "MemberId": "ae61c392-b2a8-11e4-9d59-cfb9cac33059",
+          "FullName": "Brock Lancer",
+          "UserId": "ae61c390-b2a8-11e4-9d59-cfb9cac33059",
+          "FeedItemType": "Birthday",
+          "CommentCount": 0,
+          "CongratsCount": 0,
+          "Birthdate": "October 9",
+          "Years": "6 years"
+        },
+        {
+          "hgId": "cf493e70-b332-11e7-95ab-eb1c9f7dc3f5",
+          "MemberId": "6a574671-96f4-11e6-a702-a12d20831f5a",
+          "FullName": "Paula Patton",
+          "UserId": "6a571f60-96f4-11e6-a702-a12d20831f5a",
+          "FeedItemType": "Anniversary",
+          "CommentCount": 0,
+          "CongratsCount": 0,
+          "Birthdate": "October 20",
+          "Years": "1 year"
+        },
+        {
+          "hgId": "c99dace1-b332-11e7-95ab-eb1c9f7dc3f5",
+          "MemberId": "319f29e0-35c9-11e3-8ec0-87cdf79bf3ec",
+          "FullName": "Mike Randall",
+          "UserId": "319083e0-35c9-11e3-8ec0-87cdf79bf3ec",
+          "FeedItemType": "Birthday",
+          "CommentCount": 0,
+          "CongratsCount": 0,
+          "Birthdate": "October 17",
+          "Years": "5 years"
+        },
+        {
+          "hgId": "7a6829e0-b1a0-11e7-a739-81a819429a18",
+          "MemberId": "ba4ad152-1295-11e4-a1a5-d57a3a0f2e94",
+          "FullName": "Hetal Patel",
+          "UserId": "ba4ad150-1295-11e4-a1a5-d57a3a0f2e94",
+          "FeedItemType": "Anniversary",
+          "CommentCount": 0,
+          "CongratsCount": 0,
+          "Birthdate": "November 7",
+          "Years": "3 years"
+        },
+        {
+          "hgId": "74a8c231-b1a0-11e7-a739-81a819429a18",
+          "MemberId": "33b67722-7342-11e5-85c3-e3067e4716cf",
+          "FullName": "Sana Kaspa",
+          "UserId": "33b67720-7342-11e5-85c3-e3067e4716cf",
+          "FeedItemType": "Birthday",
+          "CommentCount": 0,
+          "CongratsCount": 0,
+          "Birthdate": "October 15",
+          "Years": "5 years"
         }
-        modal.style.display = "block";
+      ],
+      "Total": 12,
+      "Title": "October 2017 Celebrations"
     }
-    var span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+
+
+
 </script>
+
+
 
 </html>

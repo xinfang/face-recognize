@@ -218,7 +218,7 @@ function createSocket(address, name) {
                     
                 }
                 $("#peopleNames").html(j.identities.toString());
-                $("#popNames").html('<h1> I found you...' + j.identities[0].toString() + '</h1>');
+               //$("#popNames").html('<h1> I found you...' + j.identities[0].toString() + '</h1>');
                 //$("#myBtn" ).trigger("click");
             } else {
                 //h += "<li>Nobody detected.</li>";

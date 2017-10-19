@@ -56,6 +56,13 @@ import matplotlib.cm as cm
 import pickle
 import openface
 
+import json
+import time
+import gzip
+
+from gesture_recognizer import GestureRecognizer
+gs = GestureRecognizer.load_model(name = "sign_detector.pkl.gz")
+
 modelDir = os.path.join(fileDir, '..', '..', 'models')
 dlibModelDir = os.path.join(modelDir, 'dlib')
 openfaceModelDir = os.path.join(modelDir, 'openface')
@@ -162,6 +169,11 @@ class OpenFaceServerProtocol(WebSocketServerProtocol):
         img = Image.open(imgF)
         img.save('/Users/xinfangyuan/Ai/openface/demos/web/hg/myphoto.jpg', 'JPEG')
         print('save succeed')
+        # image = cv2.imread('/Users/xinfangyuan/Ai/openface/demos/web/hg/myphoto.jpg')
+        # pos, ped = gs.recognize_gesture(image)
+        # print 'ok to gs'
+        # print pos
+        # print ped
 
         content = 'data:image/png;base64,' + \
         urllib.quote(base64.b64encode(imgF.buf))

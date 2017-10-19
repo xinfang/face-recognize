@@ -103,6 +103,7 @@
             font-size: 28px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: black;
@@ -113,9 +114,16 @@
             float: left;
         }
         .banner {
-            height: 233px;
-            width: 3550px;
-            margin-bottom: 80px;
+            height: 200px;
+            width: 1400px;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+        #container {
+            width: 1000px;
+            overflow: hidden;
+            margin: 50px auto;
+            background: white;
         }
         .first {
             -webkit-animation: bannermove 30s linear infinite;
@@ -132,12 +140,20 @@
                 margin-left: -2125px;
             }
         }
+        @keyframes bannermove {
+            0% {
+                margin-left: 0px;
+            }
+            100% {
+                margin-left: -1000px;
+            }
+        }
         @-moz-keyframes bannermove {
             0% {
                 margin-left: 0px;
             }
             100% {
-                margin-left: -2125px;
+                margin-left: -1000px;
             }
         }
         @-webkit-keyframes bannermove {
@@ -145,7 +161,7 @@
                 margin-left: 0px;
             }
             100% {
-                margin-left: -2125px;
+                margin-left: -1000px;
             }
         }
         @-ms-keyframes bannermove {
@@ -153,7 +169,7 @@
                 margin-left: 0px;
             }
             100% {
-                margin-left: -2125px;
+                margin-left: -1000px;
             }
         }
         @-o-keyframes bannermove {
@@ -161,7 +177,7 @@
                 margin-left: 0px;
             }
             100% {
-                margin-left: -2125px;
+                margin-left: -1000px;
             }
         }
     </style>
@@ -210,37 +226,61 @@
             <br/>
             <div id="everydayTable">
             </div>
-            <script id="everydayTableTmpl" type="text/x-handlebars-template">
-               {{#if everyday}}
-               <div>
-                   <h2>{{../counts.EverydayCount}} Everyday</h2>
-               </div>
-               <hr>
-               <div class="banner">
-                   {{#each everyday}}
-                   <div>
-                       <div class="panel panel-default badge-panel">
-                           <img class="avatar-large" src="https://localhost:8095/img{{this.BadgeUrl}}.svg">
-                           <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
-                           <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
-                           <div class="tile-bot clearfix ng-scope">
-                               <hr>
-                               <div class="pull-left mar-rt10">
-                                   <i class="sprite-okr congrats pull-left"></i>
-                                   <div class="pull-left recog-count ng-binding">{{this.CongratsCount}}</div>
-                               </div>
-                               <div class="pull-left">
-                                   <i class="sprite-okr comments pull-left"></i>
-                                   <div class="pull-left recog-count ng-binding">{{this.CommentCount}}</div>
-                               </div>
-                               <div class="timestamp div-textcenter">7 months ago</div>
-                           </div>
-                       </div>
-                   </div>
-                   {{/each}}
-               </div>
-               {{/if}}
-            </script>
+        <script id="everydayTableTmpl" type="text/x-handlebars-template">
+            {{#if everyday}}
+            <div>
+                <h2>{{../counts.EverydayCount}} Everyday</h2>
+            </div>
+            <hr>
+            <div id="container">
+                <div class="banner">
+                    {{#each everyday}}
+                        {{#if this.isFirst}}
+                            <div class="first" style="display: inline-block; margin-right: 20px;">
+                                <div class="panel panel-default badge-panel">
+                                    <img style="display: block; margin: auto;" class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
+                                    <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
+                                    <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
+                                    <div class="tile-bot clearfix ng-scope">
+                                        <hr>
+                                        <div class="pull-left mar-rt10">
+                                            <i class="sprite-okr congrats pull-left"></i>
+                                            <div class="pull-left recog-count ng-binding ">{{this.CongratsCount}}</div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <i class="sprite-okr comments pull-left"></i>
+                                            <div class="pull-left recog-count ng-binding">{{this.CommentCount}}</div>
+                                        </div>
+                                        <div class="timestamp div-textcenter">7 months ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{else}}
+                            <div style="display: inline-block; margin-right: 20px;">
+                                <div class="panel panel-default badge-panel">
+                                    <img style="display: block; margin: auto;" class="avatar-large" src="https://10.0.4.242:8095/img{{this.BadgeUrl}}.svg">
+                                    <h5 class="ng-binding ng-scope div-textcenter">{{this.Title}}</h5>
+                                    <div class="given-by ng-binding div-textcenter">{{this.Message}}</div>
+                                    <div class="tile-bot clearfix ng-scope">
+                                        <hr>
+                                        <div class="pull-left mar-rt10">
+                                            <i class="sprite-okr congrats pull-left"></i>
+                                            <div class="pull-left recog-count ng-binding ">{{this.CongratsCount}}</div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <i class="sprite-okr comments pull-left"></i>
+                                            <div class="pull-left recog-count ng-binding">{{this.CommentCount}}</div>
+                                        </div>
+                                        <div class="timestamp div-textcenter">7 months ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+        </script>
          </div>
       </div>
       <div style="display:none;">

@@ -169,19 +169,21 @@ class OpenFaceServerProtocol(WebSocketServerProtocol):
         img = Image.open(imgF)
         img.save('/Users/xinfangyuan/Ai/openface/demos/web/hg/myphoto.jpg', 'JPEG')
         print('save succeed')
+
+
+        # content = 'data:image/png;base64,' + \
+        # urllib.quote(base64.b64encode(imgF.buf))
+        # msg = {
+        #     "type": "ANNOTATED",
+        #     "content": content
+        # }
+        # self.sendMessage(json.dumps(msg))
+
         # image = cv2.imread('/Users/xinfangyuan/Ai/openface/demos/web/hg/myphoto.jpg')
         # pos, ped = gs.recognize_gesture(image)
         # print 'ok to gs'
         # print pos
         # print ped
-
-        content = 'data:image/png;base64,' + \
-        urllib.quote(base64.b64encode(imgF.buf))
-        msg = {
-            "type": "ANNOTATED",
-            "content": content
-        }
-        self.sendMessage(json.dumps(msg))
 
         persons, confidences = self.infer(imgF, args)
         print('im don to check');
